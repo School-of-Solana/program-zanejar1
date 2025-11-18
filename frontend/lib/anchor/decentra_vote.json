@@ -1,0 +1,353 @@
+{
+  "address": "FXGf1kvpC6pHSZWbPpLjAuDYNW6Bkax3E4SUEcfdBvwY",
+  "metadata": {
+    "name": "decentra_vote",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "cast_vote",
+      "discriminator": [
+        20,
+        212,
+        15,
+        189,
+        69,
+        180,
+        69,
+        151
+      ],
+      "accounts": [
+        {
+          "name": "event",
+          "writable": true
+        },
+        {
+          "name": "vote_record",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  111,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "event"
+              },
+              {
+                "kind": "account",
+                "path": "voter"
+              }
+            ]
+          }
+        },
+        {
+          "name": "voter",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "plus_choices",
+          "type": "bytes"
+        },
+        {
+          "name": "minus_choices",
+          "type": {
+            "option": "bytes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_event",
+      "discriminator": [
+        126,
+        249,
+        86,
+        221,
+        202,
+        171,
+        134,
+        20
+      ],
+      "accounts": [
+        {
+          "name": "event",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "timestamp"
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "choices",
+          "type": {
+            "vec": "string"
+          }
+        },
+        {
+          "name": "deadline",
+          "type": "i64"
+        },
+        {
+          "name": "timestamp",
+          "type": "i64"
+        },
+        {
+          "name": "max_plus_votes",
+          "type": "u8"
+        },
+        {
+          "name": "allow_minus",
+          "type": "bool"
+        },
+        {
+          "name": "max_minus_votes",
+          "type": "u8"
+        },
+        {
+          "name": "min_plus_for_minus",
+          "type": "u8"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "EventAccount",
+      "discriminator": [
+        98,
+        136,
+        32,
+        165,
+        133,
+        231,
+        243,
+        154
+      ]
+    },
+    {
+      "name": "VoteAccount",
+      "discriminator": [
+        203,
+        238,
+        154,
+        106,
+        200,
+        131,
+        0,
+        41
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "VotingClosed",
+      "msg": "Voting deadline has passed"
+    },
+    {
+      "code": 6001,
+      "name": "AlreadyVoted",
+      "msg": "You have already voted"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidChoice",
+      "msg": "Invalid choice index"
+    },
+    {
+      "code": 6003,
+      "name": "NoChoicesProvided",
+      "msg": "No choices provided for the event"
+    },
+    {
+      "code": 6004,
+      "name": "TitleTooLong",
+      "msg": "Title is too long (max 64 characters)"
+    },
+    {
+      "code": 6005,
+      "name": "DescriptionTooLong",
+      "msg": "Description is too long (max 256 characters)"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidConfig",
+      "msg": "Invalid event configuration"
+    },
+    {
+      "code": 6007,
+      "name": "DuplicateChoices",
+      "msg": "Duplicate choices provided"
+    },
+    {
+      "code": 6008,
+      "name": "ChoiceOutOfRange",
+      "msg": "Choice index out of range"
+    },
+    {
+      "code": 6009,
+      "name": "Overflow",
+      "msg": "Overflow in vote tally"
+    },
+    {
+      "code": 6010,
+      "name": "TooManyPlusVotes",
+      "msg": "Too many plus votes"
+    },
+    {
+      "code": 6011,
+      "name": "MinusVotesNotAllowed",
+      "msg": "Minus votes are not allowed for this event"
+    },
+    {
+      "code": 6012,
+      "name": "TooManyMinusVotes",
+      "msg": "Too many minus votes"
+    },
+    {
+      "code": 6013,
+      "name": "InsufficientPlusVotes",
+      "msg": "Insufficient plus votes to cast minus votes"
+    },
+    {
+      "code": 6014,
+      "name": "OverlappingChoices",
+      "msg": "Overlapping choices between plus and minus votes"
+    }
+  ],
+  "types": [
+    {
+      "name": "EventAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "choices",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "deadline",
+            "type": "i64"
+          },
+          {
+            "name": "max_plus_votes",
+            "type": "u8"
+          },
+          {
+            "name": "allow_minus",
+            "type": "bool"
+          },
+          {
+            "name": "max_minus_votes",
+            "type": "u8"
+          },
+          {
+            "name": "min_plus_for_minus",
+            "type": "u8"
+          },
+          {
+            "name": "total_votes",
+            "type": {
+              "vec": "i64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoteAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "voter",
+            "type": "pubkey"
+          },
+          {
+            "name": "has_voted",
+            "type": "bool"
+          },
+          {
+            "name": "plus_choices",
+            "type": "bytes"
+          },
+          {
+            "name": "minus_choices",
+            "type": "bytes"
+          }
+        ]
+      }
+    }
+  ]
+}
