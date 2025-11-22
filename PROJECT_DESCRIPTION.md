@@ -1,6 +1,6 @@
 # Project Description
 
-**Deployed Frontend URL:** [TODO: Link to your deployed frontend]
+**Deployed Frontend URL:** https://decentra-vote-one.vercel.app/
 
 **Solana Program ID:** FXGf1kvpC6pHSZWbPpLjAuDYNW6Bkax3E4SUEcfdBvwY
 
